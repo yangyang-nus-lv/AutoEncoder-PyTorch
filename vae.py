@@ -107,7 +107,7 @@ def train(epoch):
         
         optimizer.step()
 
-        if batch_idx % args.log_inteval == 0:
+        if batch_idx % args.log_interval == 0:
             print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
                 epoch, batch_idx * len(data), len(train_loader.dataset),
                 100. * batch_idx / len(train_loader),
@@ -143,8 +143,8 @@ def main():
         test(epoch)
 
         with torch.no_grad():
-            sample = torch.randn(64, 20) # why 64? not batch size?
-            sample = model.decode(sample).cpu()
+            sample = torch.randn(64, 20).to(device) # why 64? not batch size?
+            sample = model.decoder(sample).cpu()
             save_image(sample.view(64, 1, 28, 28),
                        result_path + '/sample_' + str(epoch) + '.png')
 
